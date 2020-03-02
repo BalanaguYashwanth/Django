@@ -1,0 +1,17 @@
+{% extends 'home.html' %}
+
+{% block content %}
+ {% if des %}
+ {% for datas in des %}
+    
+        {% csrf_token %}
+        <h3> {{datas.name}} <button> <a href="{% url 'delete' datas.id %}">delete</a> </button>   </h3>
+    
+
+ {% endfor %}
+ {% else %}
+  <h2> no data </h2>
+ 
+{% endif %}
+
+{% endblock %}

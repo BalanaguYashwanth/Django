@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'todo.apps.TodoConfig',
     'travel.apps.TravelConfig',
+    'rest_framework',
     'webapp.apps.WebappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,7 +80,7 @@ WSGI_APPLICATION = 'telsuko.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'travel',
+        'NAME': 'todo',
         'USER': 'postgres',
         'PASSWORD':'1234',
         'HOST':'localhost'
@@ -117,7 +119,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/

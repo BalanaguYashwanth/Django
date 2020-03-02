@@ -17,10 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url
+from todo.api import datalist,dataDetail 
 
 urlpatterns = [
     path('accounts/',include('accounts.urls')),
-    path('',include('webapp.urls')),
+    url(r'^api/datalist/$',datalist.as_view(),name='datalist'),
+    url(r'^api/datalist/(?P<id>\d+)/$',dataDetail.as_view(),name='datalist'),
+    path('',include('todo.urls')),
+    #path('',include('travel.urls')),
     path('admin/', admin.site.urls), 
 ]
 

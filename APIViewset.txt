@@ -1,0 +1,1 @@
+In this module the varoius CRUD operations done with API's using django

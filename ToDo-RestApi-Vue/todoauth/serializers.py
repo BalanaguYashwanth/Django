@@ -31,18 +31,73 @@ class UserSerializer(serializers.ModelSerializer):
     # def create(self,validated_data):
     #     return User.objects.create(**validated_data)
 
-
     def save(self):
-        user = User.objects.create(
-            email=self.validated_data['email'],
-            username=self.validated_data['username'],
-            first_name=self.validated_data['first_name'],
-            last_name=self.validated_data['last_name'],
-            ) 
-        password=self.validated_data['password']
-        user.set_password(password)
-        user.save()
-        return user
+        email=self.validated_data['email']
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({"email-id" : "email is already exists"})
+        else:    
+            user = User.objects.create(
+                email=self.validated_data['email'],
+                username=self.validated_data['username'],
+                first_name=self.validated_data['first_name'],
+                last_name=self.validated_data['last_name'],
+                ) 
+            password=self.validated_data['password']
+            user.set_password(password)
+            user.save()
+            return user
+
+
+class loginSerializer(serializers.Serializer):
+    username=serializers.CharField(max_length=150)
+    password=serializers.CharField(max_length=150)
+
+
+    def validate(self,data):
+        username=data.get("username","")
+        password=data.get("password","")
+        
+        if username and password:
+            user=authenticate(username=username,password=password)
+            if user:
+                if user.is_active:
+                    data['user']=user
+                else:
+                    raise exceptions.ValidationError("user is exists")
+            else:
+                raise exceptions.ValidationError("user is not valid")
+        else:
+            raise exceptions.ValidationError("username and password not to be blank")
+        return data
+    
+
+class logoutSerializer(serializers.Serializer):
+    username=serializers.CharField(max_length=150)
+    password=serializers.CharField(max_length=150)
+
+    def validate(self,data):
+        username=data.get("username","")
+        password=data.get("password","")
+        
+        if username and password:
+            user=authenticate(username=username,password=password)
+            if user:
+                if user.is_active:
+                    data['user']=user
+                else:
+                    raise exceptions.ValidationError("user is exists")
+            else:
+                raise exceptions.ValidationError("user is not valid")
+        else:
+            raise exceptions.ValidationError("username and password not to be blank")
+        return data
+
+
+
+
+
+
+
 
 
 

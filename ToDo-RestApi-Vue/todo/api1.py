@@ -30,6 +30,8 @@ class todo_api(APIView):
 
 
 class todo_api_one(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)  #main permission 
 
     def get(self,request,id):
         model=todo_data.objects.get(id=id)
